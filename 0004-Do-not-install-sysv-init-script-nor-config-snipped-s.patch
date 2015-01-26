@@ -1,0 +1,36 @@
+From a99bce416f4dd314fc86a72f70e65694f04cca1e Mon Sep 17 00:00:00 2001
+From: Dimitri John Ledkov <dimitri.j.ledkov@intel.com>
+Date: Tue, 5 May 2015 10:33:54 +0100
+Subject: [PATCH 4/4] Do not install sysv init script, nor -config snipped
+ sourced by it.
+Organization: Intel Corporation (UK) Ltd. - Co. Reg. #1134945 - Pipers Way, Swindon SN3 1RJ
+
+---
+ Makefile | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 50c1a2b..3cd17de 100644
+--- a/Makefile
++++ b/Makefile
+@@ -154,16 +154,10 @@ tmp1:=$(shell printf $(BINDIR) | sed 's/\//\\\//g')
+ tmp2:=$(shell printf $(SYSCONFIGDIR) | sed 's/\//\\\//g')
+ tmp3:=$(shell printf $(PIPE) | sed 's/\//\\\//g')
+ .PHONY: scripts
+-scripts: ebtables-save ebtables.sysv ebtables-config
++scripts: ebtables-save ebtables.sysv
+ 	cat ebtables-save | sed 's/__EXEC_PATH__/$(tmp1)/g' > ebtables-save_
+ 	mkdir -p $(DESTDIR)$(BINDIR)
+ 	install -m 0755  ebtables-save_ $(DESTDIR)$(BINDIR)/ebtables-save
+-	cat ebtables.sysv | sed 's/__EXEC_PATH__/$(tmp1)/g' | sed 's/__SYSCONFIG__/$(tmp2)/g' > ebtables.sysv_
+-	if [ "$(DESTDIR)" != "" ]; then mkdir -p $(DESTDIR)$(INITDIR); fi
+-	if test -d $(DESTDIR)$(INITDIR); then install -m 0755  ebtables.sysv_ $(DESTDIR)$(INITDIR)/ebtables; fi
+-	cat ebtables-config | sed 's/__SYSCONFIG__/$(tmp2)/g' > ebtables-config_
+-	if [ "$(DESTDIR)" != "" ]; then mkdir -p $(DESTDIR)$(SYSCONFIGDIR); fi
+-	if test -d $(DESTDIR)$(SYSCONFIGDIR); then install -m 0600  ebtables-config_ $(DESTDIR)$(SYSCONFIGDIR)/ebtables-config; fi
+ 	rm -f ebtables-save_ ebtables.sysv_ ebtables-config_
+ 
+ tmp4:=$(shell printf $(LOCKFILE) | sed 's/\//\\\//g')
+-- 
+2.1.0
+

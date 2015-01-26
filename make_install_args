@@ -1,0 +1,1 @@
+BINDIR=%{_sbindir} ETHERTYPESPATH=/usr/share/defaults/ebtables MANDIR=%{_mandir} LIBDIR=%{_libdir}

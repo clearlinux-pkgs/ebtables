@@ -1,0 +1,29 @@
+From b155ddff04ebc991b9e2dbe70fdb9e9a0fb11773 Mon Sep 17 00:00:00 2001
+From: Victor Morales <victor.morales@intel.com>
+Date: Fri, 20 Mar 2015 15:36:08 -0600
+Subject: [PATCH] Changed the ethertypes path
+
+It was changed the default path for ethertypes file for /etc/ to
+/usr/share/defaults/ebtables/
+
+Signed-off-by: Victor Morales <victor.morales@intel.com>
+---
+ Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Makefile b/Makefile
+index c1106a4..c855ba4 100644
+--- a/Makefile
++++ b/Makefile
+@@ -34,7 +34,7 @@ OBJECTS:=$(OBJECTS2) $(EXT_OBJS) $(EXT_LIBS)
+ 
+ KERNEL_INCLUDES?=include/
+ 
+-ETHERTYPESPATH?=$(ETCDIR)
++ETHERTYPESPATH?=/usr/share/defaults/ebtables
+ ETHERTYPESFILE:=$(ETHERTYPESPATH)/ethertypes
+ 
+ PIPE_DIR?=/tmp/$(PROGNAME)-v$(PROGVERSION)
+-- 
+2.1.0
+
