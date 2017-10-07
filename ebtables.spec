@@ -4,7 +4,7 @@
 #
 Name     : ebtables
 Version  : 2.0.10.4
-Release  : 38
+Release  : 39
 URL      : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Source0  : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Summary  : Ethernet Bridge frame table administration tool
@@ -72,12 +72,15 @@ doc components for the ebtables package.
 %patch5 -p1
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1491334679
+export SOURCE_DATE_EPOCH=1507409599
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1491334679
+export SOURCE_DATE_EPOCH=1507409599
 rm -rf %{buildroot}
 %make_install BINDIR=%{_sbindir} ETHERTYPESPATH=/usr/share/defaults/ebtables MANDIR=%{_mandir} LIBDIR=%{_libdir}
 
