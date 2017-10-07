@@ -4,7 +4,7 @@
 #
 Name     : ebtables
 Version  : 2.0.10.4
-Release  : 39
+Release  : 40
 URL      : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Source0  : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Summary  : Ethernet Bridge frame table administration tool
@@ -63,6 +63,14 @@ Group: Documentation
 doc components for the ebtables package.
 
 
+%package extras
+Summary: extras components for the ebtables package.
+Group: Default
+
+%description extras
+extras components for the ebtables package.
+
+
 %prep
 %setup -q -n ebtables-v2.0.10-4
 %patch1 -p1
@@ -76,11 +84,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507409599
+export SOURCE_DATE_EPOCH=1507409652
 make V=1  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1507409599
+export SOURCE_DATE_EPOCH=1507409652
 rm -rf %{buildroot}
 %make_install BINDIR=%{_sbindir} ETHERTYPESPATH=/usr/share/defaults/ebtables MANDIR=%{_mandir} LIBDIR=%{_libdir}
 
@@ -89,9 +97,9 @@ rm -rf %{buildroot}
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/ebtables-save
 /usr/bin/ebtables
 /usr/bin/ebtables-restore
-/usr/bin/ebtables-save
 
 %files data
 %defattr(-,root,root,-)
@@ -125,3 +133,7 @@ rm -rf %{buildroot}
 %files doc
 %defattr(-,root,root,-)
 %doc /usr/share/man/man8/*
+
+%files extras
+%defattr(-,root,root,-)
+/usr/bin/ebtables-save
