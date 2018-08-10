@@ -4,7 +4,7 @@
 #
 Name     : ebtables
 Version  : 2.0.10.4
-Release  : 43
+Release  : 44
 URL      : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Source0  : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Summary  : Ethernet Bridge frame table administration tool
@@ -12,7 +12,9 @@ Group    : Development/Tools
 License  : GPL-2.0
 Requires: ebtables-bin
 Requires: ebtables-data
-Requires: ebtables-doc
+Requires: ebtables-license
+Requires: ebtables-man
+Requires: iptables
 Patch1: 0001-Remove-Werror-from-compilation.patch
 Patch2: 0002-No-root-installation.patch
 Patch3: 0003-link-ebtables-with-no-as-needed-and-adjust-the-link-.patch
@@ -31,6 +33,8 @@ like iptables. There are no incompatibility issues.
 Summary: bin components for the ebtables package.
 Group: Binaries
 Requires: ebtables-data
+Requires: ebtables-license
+Requires: ebtables-man
 
 %description bin
 bin components for the ebtables package.
@@ -55,20 +59,28 @@ Provides: ebtables-devel
 dev components for the ebtables package.
 
 
-%package doc
-Summary: doc components for the ebtables package.
-Group: Documentation
-
-%description doc
-doc components for the ebtables package.
-
-
 %package extras
 Summary: extras components for the ebtables package.
 Group: Default
 
 %description extras
 extras components for the ebtables package.
+
+
+%package license
+Summary: license components for the ebtables package.
+Group: Default
+
+%description license
+license components for the ebtables package.
+
+
+%package man
+Summary: man components for the ebtables package.
+Group: Default
+
+%description man
+man components for the ebtables package.
 
 
 %prep
@@ -84,12 +96,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1507409652
-make V=1  %{?_smp_mflags}
+export SOURCE_DATE_EPOCH=1533865342
+make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1507409652
+export SOURCE_DATE_EPOCH=1533865342
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/ebtables
+cp COPYING %{buildroot}/usr/share/doc/ebtables/COPYING
 %make_install BINDIR=%{_sbindir} ETHERTYPESPATH=/usr/share/defaults/ebtables MANDIR=%{_mandir} LIBDIR=%{_libdir}
 
 %files
@@ -97,8 +111,8 @@ rm -rf %{buildroot}
 
 %files bin
 %defattr(-,root,root,-)
+%exclude /usr/bin/ebtables
 %exclude /usr/bin/ebtables-save
-/usr/bin/ebtables
 /usr/bin/ebtables-restore
 
 %files data
@@ -130,10 +144,14 @@ rm -rf %{buildroot}
 /usr/lib64/libebtable_nat.so
 /usr/lib64/libebtc.so
 
-%files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man8/*
-
 %files extras
 %defattr(-,root,root,-)
 /usr/bin/ebtables-save
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/ebtables/COPYING
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man8/ebtables.8
