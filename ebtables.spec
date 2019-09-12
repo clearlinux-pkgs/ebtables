@@ -4,17 +4,17 @@
 #
 Name     : ebtables
 Version  : 2.0.10.4
-Release  : 46
+Release  : 47
 URL      : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Source0  : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Summary  : Ethernet Bridge frame table administration tool
 Group    : Development/Tools
 License  : GPL-2.0
-Requires: ebtables-bin = %{version}-%{release}
 Requires: ebtables-data = %{version}-%{release}
 Requires: ebtables-license = %{version}-%{release}
 Requires: ebtables-man = %{version}-%{release}
 Requires: iptables
+BuildRequires : iptables
 Patch1: 0001-Remove-Werror-from-compilation.patch
 Patch2: 0002-No-root-installation.patch
 Patch3: 0003-link-ebtables-with-no-as-needed-and-adjust-the-link-.patch
@@ -29,17 +29,6 @@ layer filtering and some basic filtering on higher network layers.
 The ebtables tool can be used together with the other Linux filtering tools,
 like iptables. There are no incompatibility issues.
 
-%package bin
-Summary: bin components for the ebtables package.
-Group: Binaries
-Requires: ebtables-data = %{version}-%{release}
-Requires: ebtables-license = %{version}-%{release}
-Requires: ebtables-man = %{version}-%{release}
-
-%description bin
-bin components for the ebtables package.
-
-
 %package data
 Summary: data components for the ebtables package.
 Group: Data
@@ -51,9 +40,9 @@ data components for the ebtables package.
 %package dev
 Summary: dev components for the ebtables package.
 Group: Development
-Requires: ebtables-bin = %{version}-%{release}
 Requires: ebtables-data = %{version}-%{release}
 Provides: ebtables-devel = %{version}-%{release}
+Requires: ebtables = %{version}-%{release}
 
 %description dev
 dev components for the ebtables package.
@@ -87,25 +76,32 @@ man components for the ebtables package.
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1540312554
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1568249788
+export GCC_IGNORE_WERROR=1
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FCFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export FFLAGS="$CFLAGS -O3 -ffat-lto-objects -flto=4 "
+export CXXFLAGS="$CXXFLAGS -O3 -ffat-lto-objects -flto=4 "
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1540312554
+export SOURCE_DATE_EPOCH=1568249788
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/ebtables
 cp COPYING %{buildroot}/usr/share/package-licenses/ebtables/COPYING
 %make_install BINDIR=%{_sbindir} ETHERTYPESPATH=/usr/share/defaults/ebtables MANDIR=%{_mandir} LIBDIR=%{_libdir}
+## Remove excluded files
+rm -f %{buildroot}/usr/bin/ebtables
+rm -f %{buildroot}/usr/bin/ebtables-restore
+rm -f %{buildroot}/usr/bin/ebtables-save
 
 %files
 %defattr(-,root,root,-)
-
-%files bin
-%defattr(-,root,root,-)
-%exclude /usr/bin/ebtables
-%exclude /usr/bin/ebtables-restore
-%exclude /usr/bin/ebtables-save
 
 %files data
 %defattr(-,root,root,-)
