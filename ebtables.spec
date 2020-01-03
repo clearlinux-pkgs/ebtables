@@ -5,8 +5,8 @@
 Name     : ebtables
 Version  : 2.0.10.4
 Release  : 48
-URL      : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
-Source0  : ftp://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
+URL      : http://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
+Source0  : http://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
 Summary  : Ethernet Bridge frame table administration tool
 Group    : Development/Tools
 License  : GPL-2.0
