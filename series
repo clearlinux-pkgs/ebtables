@@ -1,5 +1,0 @@
-0001-Remove-Werror-from-compilation.patch
-0002-No-root-installation.patch
-0003-link-ebtables-with-no-as-needed-and-adjust-the-link-.patch
-0004-Do-not-install-sysv-init-script-nor-config-snipped-s.patch
-0004-Changed-the-ethertypes-path.patch

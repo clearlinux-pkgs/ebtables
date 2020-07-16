@@ -1,5 +1,5 @@
 PKG_NAME := ebtables
-URL = http://ftp.netfilter.org/pub/ebtables/ebtables-v2.0.10-4.tar.gz
+URL = https://www.netfilter.org/pub/ebtables/ebtables-2.0.11.tar.gz
 ARCHIVES = 
 
 include ../common/Makefile.common
